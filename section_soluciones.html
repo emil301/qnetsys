@@ -1,0 +1,145 @@
+<!-- ============================================================
+     SECCIÓN: SOLUCIONES
+     Para editar: modificar las tarjetas dentro del grid.
+     Cada tarjeta tiene: ícono, industria, título, descripción, lista de features.
+     ============================================================ -->
+<section id="soluciones" class="py-24 relative overflow-hidden">
+
+    <!-- Fondo decorativo -->
+    <div class="absolute inset-0 grid-bg opacity-50"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header -->
+        <div class="text-center mb-16 scroll-reveal">
+            <span class="inline-block px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-widest mb-4">Soluciones por Sector</span>
+            <h2 class="font-tech text-3xl md:text-4xl font-bold text-white mb-4">
+                Tecnología adaptada a <span class="gradient-text">cada industria</span>
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Cada entorno tiene sus propios riesgos. Diseñamos esquemas de seguridad específicos para el sector, no plantillas genéricas.
+            </p>
+        </div>
+
+        <!-- Grid de soluciones -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Industria / Logística -->
+            <div class="glass-card rounded-2xl p-8 hover:-translate-y-1 transition-all duration-300 glow-border scroll-reveal group">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-cyan-400/60">Industria & Logística</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Plantas y Depósitos</h3>
+                <p class="text-gray-400 text-sm mb-5">Control de acceso por zonas, CCTV con analítica de movimiento y alarmas de perímetro integradas.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Acceso por turnos y roles</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Alertas de intrusión perimetral</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Registro de ingreso de vehículos</li>
+                </ul>
+            </div>
+
+            <!-- Comercio / Retail -->
+            <div class="glass-card rounded-2xl p-8 hover:-translate-y-1 transition-all duration-300 glow-border scroll-reveal group" style="transition-delay:80ms">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-indigo-400/60">Comercio & Retail</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">Locales y Cadenas</h3>
+                <p class="text-gray-400 text-sm mb-5">Videovigilancia con detección de comportamiento sospechoso, conteo de personas y monitoreo remoto desde cualquier dispositivo.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>Detección de hurto en tiempo real</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>Conteo de afluencia</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>Gestión multi-sucursal unificada</li>
+                </ul>
+            </div>
+
+            <!-- Edificios / Oficinas -->
+            <div class="glass-card rounded-2xl p-8 hover:-translate-y-1 transition-all duration-300 glow-border scroll-reveal group" style="transition-delay:160ms">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-purple-400/60">Oficinas & Edificios</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">Corporativos y Torres</h3>
+                <p class="text-gray-400 text-sm mb-5">Control de acceso biométrico por piso, intercomunicadores IP y gestión de visitas integrada al directorio corporativo.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0"></span>Torniquetes y molinetes inteligentes</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0"></span>Gestión de visitas con QR</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0"></span>Integración con Active Directory</li>
+                </ul>
+            </div>
+
+            <!-- Salud -->
+            <div class="glass-card rounded-2xl p-8 hover:-translate-y-1 transition-all duration-300 glow-border scroll-reveal group" style="transition-delay:240ms">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400 shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-green-400/60">Salud</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Clínicas y Hospitales</h3>
+                <p class="text-gray-400 text-sm mb-5">Zonas restringidas con control biométrico, cámaras en pasillos y salas de espera, y sistemas de pánico integrados.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0"></span>Acceso diferenciado por rol</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0"></span>Botones de pánico silenciosos</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0"></span>Grabación encriptada on-site</li>
+                </ul>
+            </div>
+
+            <!-- Residencial -->
+            <div class="glass-card rounded-2xl p-8 hover:-translate-y-1 transition-all duration-300 glow-border scroll-reveal group" style="transition-delay:320ms">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-amber-400/60">Residencial</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">Countries y Barrios</h3>
+                <p class="text-gray-400 text-sm mb-5">Portones automáticos con reconocimiento de patentes, videoporteros IP y aplicación móvil para residentes.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>Reconocimiento de patentes (LPR)</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>App de apertura remota</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>Registro de visitas y proveedores</li>
+                </ul>
+            </div>
+
+            <!-- Educación -->
+            <div class="glass-card rounded-2xl p-8 hover:-translate-y-1 transition-all duration-300 glow-border scroll-reveal group" style="transition-delay:400ms">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-cyan-400/60">Educación</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Colegios y Universidades</h3>
+                <p class="text-gray-400 text-sm mb-5">Ingreso controlado por biometría, cámaras en pasillos y patios, y alertas automáticas a encargados ante eventos de seguridad.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Control parental de retiro</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Alertas por zonas restringidas</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Interoperabilidad con portería</li>
+                </ul>
+            </div>
+
+        </div><!-- /grid -->
+    </div>
+</section>
