@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -833,8 +836,8 @@
                             ></textarea>
                         </div>
 
-                        <div class="h-captcha mb-4" data-sitekey="0c1a9752-32a9-4f51-8348-e821ace6775d"></div> 
-
+                        <div class="h-captcha mb-4" data-captcha="true" data-sitekey="0c1a9752-32a9-4f51-8348-e821ace6775d"></div>
+                    
                         <button
                             type="submit"
                             id="submitBtn"
@@ -854,33 +857,7 @@
                     </form>
                 </div>
             </div><!-- /formulario -->
-            <input type="hidden" name="access_key" value="TU_ACCESS_KEY_AQUI">
-
-<script>
-document.querySelector("form").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const formData = new FormData(form);
-
-  try {
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
-    const result = await response.json();
-
-    if (result.success) {
-      alert("✅ Consulta enviada correctamente. Te contactaremos pronto.");
-      form.reset();
-    } else {
-      alert("❌ Hubo un error al enviar el formulario. Intenta nuevamente.");
-    }
-  } catch (error) {
-    alert("⚠️ Error de conexión. Verificá tu red o la clave de acceso.");
-  }
-});
-</script>
-
+         
         </div><!-- /grid -->
     </div>
 </section>
