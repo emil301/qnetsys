@@ -350,17 +350,19 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.disabled = true;
         btnText.textContent = 'Enviando...';
 
-        try {
-    const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            subject:   'Nueva consulta desde QNetSys',
-            from_name: 'QNetSys Web',
-            ...data,
-        }),
-    });
+       const formData = new FormData(form);
+formData.append('access_key', WEB3FORMS_KEY);
+formData.append('subject', 'Nueva consulta desde QNetSys');
+formData.append('from_name', 'QNetSys Web');
+
+const res = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { Accept: 'application/json' },
+    body: formData,
+});
+       
+
+
     const result = await res.json();
     if (!res.ok || !result.success) throw new Error(result.message || 'Error Web3Forms');
 
