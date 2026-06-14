@@ -306,7 +306,7 @@ document.addEventListener('keydown', (e) => {
    ---------------------------------------------------------------- */
 
 // EDITAR: poner tu endpoint aquí cuando esté listo
-const FORM_ENDPOINT = null; // ej: 'https://tu-backend.com/api/contact'
+const WEB3FORMS_KEY = '0c1a9752-32a9-4f51-8348-e821ace6775d'; // ej: 'https://tu-backend.com/api/contact'
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('contactForm');
@@ -351,34 +351,22 @@ document.addEventListener('DOMContentLoaded', () => {
         btnText.textContent = 'Enviando...';
 
         try {
-            if (FORM_ENDPOINT) {
-                // ---- OPCIÓN A: fetch a backend propio ----
-                const res = await fetch(FORM_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                });
-                if (!res.ok) throw new Error('Server error');
+    const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject:   'Nueva consulta desde QNetSys',
+            from_name: 'QNetSys Web',
+            ...data,
+        }),
+    });
+    const result = await res.json();
+    if (!res.ok || !result.success) throw new Error(result.message || 'Error Web3Forms');
 
-            } /* else if (typeof emailjs !== 'undefined') {
-                // ---- OPCIÓN B: EmailJS ----
-                // Completar con tus IDs de EmailJS
-                await emailjs.send(
-                    'SERVICE_ID',    // tu Service ID de EmailJS
-                    'TEMPLATE_ID',   // tu Template ID de EmailJS
-                    data,
-                    'PUBLIC_KEY'     // tu Public Key de EmailJS
-                );
-
-            } */ else {
-                // Sin endpoint configurado: simular envío (quitar en producción)
-                await new Promise(r => setTimeout(r, 1000));
-                console.info('[QNetSys] Datos del form (sin endpoint):', data);
-            }
-
-            // Éxito
-            successEl?.classList.remove('hidden');
-            form.reset();
+    // Éxito
+    successEl?.classList.remove('hidden');
+    form.reset();
 
         } catch (err) {
             console.error('[QNetSys] Error al enviar formulario:', err);
