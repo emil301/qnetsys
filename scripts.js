@@ -347,38 +347,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Estado de carga
-        btn.disabled = true;
-        btnText.textContent = 'Enviando...';
+       // Estado de carga
+btn.disabled = true;
+btnText.textContent = 'Enviando...';
 
-       const formData = new FormData(form);
-formData.append('access_key', WEB3FORMS_KEY);
-formData.append('subject', 'Nueva consulta desde QNetSys');
-formData.append('from_name', 'QNetSys Web');
+try {
+    const formData = new FormData(form);
+    formData.append('access_key', WEB3FORMS_KEY);
+    formData.append('subject', 'Nueva consulta desde QNetSys');
+    formData.append('from_name', 'QNetSys Web');
 
-const res = await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: { Accept: 'application/json' },
-    body: formData,
-});
-       
-
-
+    const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+    });
     const result = await res.json();
+
     if (!res.ok || !result.success) throw new Error(result.message || 'Error Web3Forms');
 
-    // Éxito
     successEl?.classList.remove('hidden');
     form.reset();
 
-        } catch (err) {
-            console.error('[QNetSys] Error al enviar formulario:', err);
-            errorEl?.classList.remove('hidden');
-        } finally {
-            btn.disabled = false;
-            btnText.textContent = 'Enviar consulta';
-        }
-    });
-});
+} catch (err) {
+    console.error('[QNetSys] Error al enviar formulario:', err);
+    errorEl?.classList.remove('hidden');
+} finally {
+    btn.disabled = false;
+    btnText.textContent = 'Enviar consulta';
+}
+
 
 
 /* ----------------------------------------------------------------
