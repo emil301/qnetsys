@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QNetSys | Sistemas Integrados de Seguridad Electrónica y Control de Acceso</title>
+  <meta name="description" content="QNetSys - Soluciones integrales de seguridad electrónica, CCTV, control de acceso biométrico y sistemas inteligentes conectados a través de Internet.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            tech: ['Orbitron', 'sans-serif'],
+          },
+          colors: {
+            qnet: {
+              dark: '#0a0e1a',
+              primary: '#0f172a',
+              accent: '#06b6d4',
+              accentHover: '#0891b2',
+              secondary: '#6366f1',
+              surface: '#1e293b',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'scan': 'scan 4s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            scan: {
+              '0%': { top: '0%' },
+              '100%': { top: '100%' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://web3forms.com/client/script.js" async defer></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 nav-blur border-b border-white/5 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <div class="flex items-center space-x-3 group cursor-pointer" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-cyan-500/30 transition-all">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <span class="font-tech text-2xl font-bold tracking-wider text-white">QNet<span class="text-cyan-400">Sys</span></span>
+        </div>
+
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#servicios" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Servicios</a>
+          <a href="#soluciones" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Soluciones</a>
+          <a href="#tecnologia" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Tecnología</a>
+          <a href="#estadisticas" class="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">Resultados</a>
+          <a href="#contacto" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 text-white text-sm font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5">
+            Cotizar Ahora
+          </a>
+        </div>
+
+        <button class="md:hidden text-gray-300 hover:text-white" onclick="toggleMobileMenu()">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-qnet-primary border-t border-white/5">
+      <div class="px-4 pt-2 pb-6 space-y-1">
+        <a href="#servicios" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-white/5 rounded-md">Servicios</a>
+        <a href="#soluciones" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-white/5 rounded-md">Soluciones</a>
+        <a href="#tecnologia" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-white/5 rounded-md">Tecnología</a>
+        <a href="#estadisticas" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-white/5 rounded-md">Resultados</a>
+        <a href="#contacto" class="block px-3 py-2 text-base font-medium text-cyan-400 font-semibold">Cotizar Ahora</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden grid-bg">
+    <div class="absolute inset-0 hero-overlay"></div>
+    <div class="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse-slow" style="animation-delay:1s;"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
+      <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-8 animate-float">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 mr-2 animate-pulse"></span>
+        Seguridad Inteligente 24/7
+      </div>
+
+      <h1 class="font-tech text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+        <span class="text-white">Protege tu mundo</span><br>
+        <span class="gradient-text">conectado</span>
+      </h1>
+
+      <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-400 leading-relaxed">
+        Sistemas integrales de seguridad electrónica y control de acceso.
+        Tecnología de vanguardia conectada a través de Internet para proteger lo que más valoras.
+      </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="#contacto" class="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold text-lg hover:shadow-2xl hover:shadow-cyan-500/30 transition-all transform hover:-translate-y-1 flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Solicitar Demo
+        </a>
+        <a href="#soluciones" class="px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Ver Soluciones
+        </a>
+      </div>
+
+      <!-- Stats Bar -->
+      <div id="estadisticas" class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-white counter-value" data-target="500" data-suffix="+">0</div>
+          <div class="text-sm text-gray-400 mt-1">Clientes Protegidos</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-white counter-value" data-target="10000" data-suffix="+">0</div>
+          <div class="text-sm text-gray-400 mt-1">Dispositivos Conectados</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-white counter-value" data-target="99" data-suffix="%">0</div>
+          <div class="text-sm text-gray-400 mt-1">Uptime Garantizado</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-white counter-value" data-target="24" data-suffix="/7">0</div>
+          <div class="text-sm text-gray-400 mt-1">Monitoreo Permanente</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="servicios" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="font-tech text-3xl md:text-4xl font-bold text-white mb-4">Nuestros <span class="text-cyan-400">Servicios</span></h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">Soluciones integrales diseñadas para proteger infraestructuras críticas con tecnología de punta.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- CCTV -->
+        <div class="service-card glass-card rounded-2xl p-8 hover:transform hover:-translate-y-2 transition-all duration-300 glow-border scroll-reveal group cursor-pointer" onclick="showServiceDetail('cctv')">
+          <div class="service-icon w-14 h-14 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-6 text-cyan-400">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">CCTV & Video Vigilancia</h3>
+          <p class="text-gray-400 mb-4">Cámaras IP 4K/8K con análisis de video inteligente, detección de movimiento y alertas en tiempo real.</p>
+          <div class="flex items-center text-cyan-400 text-sm font-medium">
+            <span>Ver más</span>
+            <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Control de Acceso -->
+        <div class="service-card glass-card rounded-2xl p-8 hover:transform hover:-translate-y-2 transition-all duration-300 glow-border scroll-reveal group cursor-pointer" style="transition-delay:100ms;" onclick="showServiceDetail('access')">
+          <div class="service-icon w-14 h-14 rounded-xl bg-indigo-500/10 flex items-center justify-center mb-6 text-indigo-400">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">Control de Acceso</h3>
+          <p class="text-gray-400 mb-4">Biometría facial, huella dactilar, tarjetas inteligentes y lectores QR para gestión de accesos segura.</p>
+          <div class="flex items-center text-indigo-400 text-sm font-medium">
+            <span>Ver más</span>
+            <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- IoT -->
+        <div class="service-card glass-card rounded-2xl p-8 hover:transform hover:-translate-y-2 transition-all duration-300 glow-border scroll-reveal group cursor-pointer" style="transition-delay:200ms;" onclick="showServiceDetail('iot')">
+          <div class="service-icon w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-6 text-emerald-400">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">Integración IoT</h3>
+          <p class="text-gray-400 mb-4">Conectividad total entre sensores, actuadores y plataformas cloud para edificios inteligentes.</p>
+          <div class="flex items-center text-emerald-400 text-sm font-medium">
+            <span>Ver más</span>
+            <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Ciberseguridad -->
+        <div class="service-card glass-card rounded-2xl p-8 hover:transform hover:-translate-y-2 transition-all duration-300 glow-border scroll-reveal group cursor-pointer" onclick="showServiceDetail('cyber')">
+          <div class="service-icon w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center mb-6 text-purple-400">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 8"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">Ciberseguridad</h3>
+          <p class="text-gray-400 mb-4">Protección de redes, cifrado end-to-end y monitoreo de amenazas para infraestructura crítica.</p>
+          <div class="flex items-center text-purple-400 text-sm font-medium">
+            <span>Ver más</span>
+            <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Cloud -->
+        <div class="service-card glass-card rounded-2xl p-8 hover:transform hover:-translate-y-2 transition-all duration-300 glow-border scroll-reveal group cursor-pointer" style="transition-delay:100ms;" onclick="showServiceDetail('cloud')">
+          <div class="service-icon w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6 text-blue-400">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Plataforma Cloud</h3>
+          <p class="text-gray-400 mb-4">Gestión centralizada desde cualquier dispositivo. Dashboards en tiempo real y reportes automáticos.</p>
+          <div class="flex items-center text-blue-400 text-sm font-medium">
+            <span>Ver más</span>
+            <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Soporte -->
+        <div class="service-card glass-card rounded-2xl p-8 hover:transform hover:-translate-y-2 transition-all duration-300 glow-border scroll-reveal group cursor-pointer" style="transition-delay:200ms;" onclick="showServiceDetail('support')">
+          <div class="service-icon w-14 h-14 rounded-xl bg-orange-500/10 flex items-center justify-center mb-6 text-orange-400">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors">Soporte 24/7</h3>
+          <p class="text-gray-400 mb-4">Centro de monitoreo permanente con respuesta inmediata a incidentes y mantenimiento preventivo.</p>
+          <div class="flex items-center text-orange-400 text-sm font-medium">
+            <span>Ver más</span>
+            <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Showcase -->
+  <section id="soluciones" class="py-24 bg-qnet-surface/30 relative overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-30"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="scroll-reveal">
+          <h2 class="font-tech text-3xl md:text-4xl font-bold text-white mb-6">
+            Seguridad que se <span class="text-cyan-400">adapta</span> a tu negocio
+          </h2>
+          <p class="text-gray-400 text-lg mb-8">
+            Desde pequeñas oficinas hasta complejos industriales, nuestros sistemas escalan según tus necesidades.
+            Integración perfecta con infraestructura existente.
+          </p>
+          <div class="space-y-6">
+            <div class="flex items-start gap-4 group">
+              <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-500/20 transition-colors">
+                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h4 class="text-white font-semibold mb-1">Instalación No Intrusiva</h4>
+                <p class="text-gray-400 text-sm">Implementación sin interrumpir operaciones diarias. Migración gradual disponible.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-500/20 transition-colors">
+                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h4 class="text-white font-semibold mb-1">APIs Abiertas</h4>
+                <p class="text-gray-400 text-sm">Integración con sistemas de RRHH, ERP y plataformas de terceros.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-500/20 transition-colors">
+                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h4 class="text-white font-semibold mb-1">Cumplimiento Normativo</h4>
+                <p class="text-gray-400 text-sm">Cumplimos con ISO 27001, GDPR y regulaciones locales de protección de datos.</p>
+              </div>
+            </div>
+          </div>
+          <button onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})" class="mt-10 px-8 py-3 rounded-full border border-cyan-500/30 text-cyan-400 font-semibold hover:bg-cyan-500/10 transition-all">
+            Solicitar Brochure Técnico
+          </button>
+        </div>
+
+        <div class="relative scroll-reveal">
+          <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-indigo-600 rounded-2xl opacity-20 blur-2xl"></div>
+          <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Panel de control de seguridad" class="w-full h-auto object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-qnet-dark/90 via-transparent to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
+                <span class="text-green-400 text-sm font-medium">Sistema Activo</span>
+              </div>
+              <p class="text-white font-semibold">Monitoreo en tiempo real desde cualquier dispositivo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Stack -->
+  <section id="tecnologia" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="font-tech text-3xl md:text-4xl font-bold text-white mb-4">Stack <span class="text-cyan-400">Tecnológico</span></h2>
+        <p class="text-gray-400">Infraestructura robusta y escalable para máxima disponibilidad.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-card rounded-2xl p-8 text-center scroll-reveal hover:border-cyan-500/30 transition-colors">
+          <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
+            <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Edge Computing</h3>
+          <p class="text-gray-400 text-sm">Procesamiento local en dispositivos para latencia mínima y funcionamiento offline.</p>
+        </div>
+        <div class="glass-card rounded-2xl p-8 text-center scroll-reveal hover:border-indigo-500/30 transition-colors" style="transition-delay:100ms;">
+          <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center">
+            <svg class="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">AI & Machine Learning</h3>
+          <p class="text-gray-400 text-sm">Reconocimiento facial, detección de comportamientos anómalos y predicción de incidentes.</p>
+        </div>
+        <div class="glass-card rounded-2xl p-8 text-center scroll-reveal hover:border-emerald-500/30 transition-colors" style="transition-delay:200ms;">
+          <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center">
+            <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Cloud Híbrida</h3>
+          <p class="text-gray-400 text-sm">Arquitectura flexible: datos sensibles localmente, analytics en la nube.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <!-- Testimonials -->
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="font-tech text-3xl md:text-4xl font-bold text-white mb-4">Clientes que <span class="text-cyan-400">Confían</span></h2>
+        <p class="text-gray-400">Empresas líderes que protegen su infraestructura con QNetSys.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-card rounded-2xl p-8 scroll-reveal">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <p class="text-gray-300 mb-6">"QNetSys transformó completamente nuestra seguridad corporativa. La integración con nuestro sistema de RRHH fue impecable y el monitoreo en tiempo real nos da una tranquilidad invaluable."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold text-sm">MR</div>
+            <div>
+              <div class="text-white font-medium">María Rodríguez</div>
+              <div class="text-sm text-gray-400">CTO, TechCorp Industries</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-8 scroll-reveal" style="transition-delay:100ms;">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <p class="text-gray-300 mb-6">"El sistema de control de acceso biométrico redujo los incidentes de seguridad en un 95%. La instalación fue rápida y el soporte técnico es excepcional."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white font-bold text-sm">CG</div>
+            <div>
+              <div class="text-white font-medium">Carlos Gómez</div>
+              <div class="text-sm text-gray-400">Director de Seguridad, LogiPark</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-8 scroll-reveal" style="transition-delay:200ms;">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <p class="text-gray-300 mb-6">"La plataforma cloud nos permite monitorear 15 sucursales desde un solo dashboard. La escalabilidad es exactamente lo que necesitábamos para crecer."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-sm">AL</div>
+            <div>
+              <div class="text-white font-medium">Ana López</div>
+              <div class="text-sm text-gray-400">CEO, RetailMax Chain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner de Marcas -->
+
+
+  
+
+<section class="py-16 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center scroll-reveal">
+    <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">Partners y productos con los que trabajamos</p>
+  </div>
+
+  <!-- Fila 1 — izquierda a derecha -->
+  <div class="brands-wrapper overflow-hidden mb-4">
+    <div class="brands-track-1 flex gap-3 w-max">
+      <!-- SET 1 -->
+      <div class="brands-set flex gap-3 flex-shrink-0">
+        <span class="brand-pill">Hikvision</span>
+        <span class="brand-pill">Dahua</span>
+        <span class="brand-pill brand-pill--active">Axis</span>
+        <span class="brand-pill">Bosch</span>
+        <span class="brand-pill">Hanwha</span>
+        <span class="brand-pill">Uniview</span>
+        <span class="brand-pill">Vivotek</span>
+        <span class="brand-pill brand-pill--active">Genetec</span>
+        <span class="brand-pill">Milestone</span>
+        <span class="brand-pill">Mobotix</span>
+      </div>
+      <!-- SET 2 (copia para loop) -->
+      <div class="brands-set flex gap-3 flex-shrink-0" aria-hidden="true">
+        <span class="brand-pill">Hikvision</span>
+        <span class="brand-pill">Dahua</span>
+        <span class="brand-pill brand-pill--active">Axis</span>
+        <span class="brand-pill">Bosch</span>
+        <span class="brand-pill">Hanwha</span>
+        <span class="brand-pill">Uniview</span>
+        <span class="brand-pill">Vivotek</span>
+        <span class="brand-pill brand-pill--active">Genetec</span>
+        <span class="brand-pill">Milestone</span>
+        <span class="brand-pill">Mobotix</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fila 2 — derecha a izquierda -->
+  <div class="brands-wrapper overflow-hidden">
+    <div class="brands-track-2 flex gap-3 w-max">
+      <!-- SET 1 -->
+      <div class="brands-set flex gap-3 flex-shrink-0">
+        <span class="brand-pill">ZKTeco</span>
+        <span class="brand-pill brand-pill--active">Suprema</span>
+        <span class="brand-pill">HID Global</span>
+        <span class="brand-pill">Honeywell</span>
+        <span class="brand-pill brand-pill--active">Pelco</span>
+        <span class="brand-pill">Avigilon</span>
+        <span class="brand-pill">Flir</span>
+        <span class="brand-pill">Verkada</span>
+        <span class="brand-pill brand-pill--active">Paxton</span>
+        <span class="brand-pill">Lenel</span>
+      </div>
+      <!-- SET 2 (copia para loop) -->
+      <div class="brands-set flex gap-3 flex-shrink-0" aria-hidden="true">
+        <span class="brand-pill">ZKTeco</span>
+        <span class="brand-pill brand-pill--active">Suprema</span>
+        <span class="brand-pill">HID Global</span>
+        <span class="brand-pill">Honeywell</span>
+        <span class="brand-pill brand-pill--active">Pelco</span>
+        <span class="brand-pill">Avigilon</span>
+        <span class="brand-pill">Flir</span>
+        <span class="brand-pill">Verkada</span>
+        <span class="brand-pill brand-pill--active">Paxton</span>
+        <span class="brand-pill">Lenel</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Fin Banner Marcas -->
+<!-- comienzo del Banner Marcas debil -->
+
+  <!-- comienzo del Banner Marcas debil -->
+
+
+
+  
+
+  <!-- Contact Section -->
+  <section id="contacto" class="py-24 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-qnet-dark/50"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div class="scroll-reveal">
+          <h2 class="font-tech text-3xl md:text-4xl font-bold text-white mb-6">
+            Empecemos tu <span class="text-cyan-400">proyecto</span>
+          </h2>
+          <p class="text-gray-400 text-lg mb-8">
+            Cuéntanos sobre tus necesidades de seguridad. Nuestros especialistas diseñarán una solución a medida para tu infraestructura.
+          </p>
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm text-gray-400">Teléfono</div>
+                 <div class="text-white font-medium">+598 99 769 478</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm text-gray-400">Email</div>
+                <div class="text-white font-medium">qnetsys@outlook.com</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm text-gray-400">Oficina Central</div>
+                <div class="text-white font-medium">Montevideo, Uruguay</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+        <!-- FORMULARIO WEB3FORMS — listo para enganchar tu access_key -->
+        <div class="glass-card rounded-2xl p-8 border border-white/10 scroll-reveal">
+          <form id="contactForm" class="space-y-6">
+            <!-- Web3Forms access_key: reemplazá el value con tu clave real -->
+            <input type="hidden" name="access_key" value="0c1a9752-32a9-4f51-8348-e821ace6775d">
+            <input type="hidden" name="subject" value="Nueva consulta desde QNetSys">
+            <input type="hidden" name="from_name" value="QNetSys Web">
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Nombre *</label>
+                <input type="text" name="contact_name" required class="w-full bg-qnet-dark border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:border-cyan-500 focus:outline-none transition-colors" placeholder="Tu nombre">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Empresa</label>
+                <input type="text" name="contact_company" class="w-full bg-qnet-dark border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:border-cyan-500 focus:outline-none transition-colors" placeholder="Nombre de empresa">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Email *</label>
+              <input type="email" name="contact_email" required class="w-full bg-qnet-dark border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:border-cyan-500 focus:outline-none transition-colors" placeholder="correo@empresa.com">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Teléfono</label>
+              <input type="tel" name="contact_phone" class="w-full bg-qnet-dark border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:border-cyan-500 focus:outline-none transition-colors" placeholder="+598 99 000 000">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Tipo de Servicio</label>
+              <select name="contact_service" class="w-full bg-qnet-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:outline-none transition-colors">
+                <option value="">Seleccioná un servicio</option>
+                <option value="cctv">CCTV y Video Vigilancia</option>
+                <option value="access">Control de Acceso Biométrico</option>
+                <option value="iot">Integración IoT</option>
+                <option value="cyber">Ciberseguridad</option>
+                <option value="cloud">Plataforma Cloud</option>
+                <option value="support">Soporte y Mantenimiento</option>
+                <option value="integral">Solución Integral</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Mensaje *</label>
+              <textarea name="contact_message" rows="4" required class="w-full bg-qnet-dark border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:border-cyan-500 focus:outline-none transition-colors resize-none" placeholder="Describí tus necesidades de seguridad..."></textarea>
+            </div>
+
+            <!-- Mensajes de estado -->
+            <div id="formSuccess" class="hidden p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm flex items-center gap-2">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              ¡Mensaje enviado! Nos pondremos en contacto en menos de 24 horas.
+            </div>
+            <div id="formError" class="hidden p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-2">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Hubo un error al enviar. Por favor intentá de nuevo o escribinos directamente.
+            </div>
+
+             <div class="h-captcha" data-captcha="true" data-theme="dark" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
+            
+            <button type="submit" id="submitBtn" class="w-full py-4 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none">
+              <span id="submitBtnText">Enviar Consulta</span>
+              <svg id="submitIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              <svg id="submitSpinner" class="w-5 h-5 animate-spin hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer COMPLETO -->
+  <footer class="border-t border-white/5 bg-qnet-dark">
+    <!-- Footer principal -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+
+        <!-- Columna 1: Marca -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center space-x-3 mb-5">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <span class="font-tech text-xl font-bold text-white">QNet<span class="text-cyan-400">Sys</span></span>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed max-w-sm mb-6">
+            Líderes en sistemas integrados de seguridad electrónica y control de acceso. Protegiendo infraestructuras críticas con tecnología de vanguardia.
+          </p>
+          <!-- Badges de confianza -->
+          <div class="flex flex-wrap gap-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-gray-400">
+              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              ISO 27001
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-gray-400">
+              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              GDPR Ready
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-gray-400">
+              <svg class="w-3.5 h-3.5 text-green-400" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+              Uptime 99.9%
+            </span>
+          </div>
+        </div>
+
+        <!-- Columna 2: Servicios -->
+        <div>
+          <h4 class="text-white font-semibold mb-5 text-sm uppercase tracking-wider">Servicios</h4>
+          <ul class="space-y-3 text-sm text-gray-400">
+            <li><a href="#servicios" onclick="showServiceDetail('cctv')" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>CCTV Inteligente</a></li>
+            <li><a href="#servicios" onclick="showServiceDetail('access')" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>Control de Acceso</a></li>
+            <li><a href="#servicios" onclick="showServiceDetail('iot')" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>IoT & Automatización</a></li>
+            <li><a href="#servicios" onclick="showServiceDetail('cyber')" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>Ciberseguridad</a></li>
+            <li><a href="#servicios" onclick="showServiceDetail('cloud')" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>Plataforma Cloud</a></li>
+            <li><a href="#servicios" onclick="showServiceDetail('support')" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>Soporte 24/7</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Empresa + Contacto -->
+        <div>
+          <h4 class="text-white font-semibold mb-5 text-sm uppercase tracking-wider">Empresa</h4>
+          <ul class="space-y-3 text-sm text-gray-400 mb-8">
+            <li><a href="#soluciones" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>Nosotros</a></li>
+            <li><a href="#tecnologia" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>Tecnología</a></li>
+            <li><a href="#contacto" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-cyan-500/50 group-hover:bg-cyan-400 transition-colors"></span>Contacto</a></li>
+          </ul>
+          <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Seguinos</h4>
+          <div class="flex gap-3">
+            <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter / X" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" aria-label="WhatsApp" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer bottom -->
+    <div class="border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-gray-500">&copy; <span id="footer-year"></span> QNetSys. Todos los derechos reservados.</p>
+        <div class="flex items-center gap-6 text-sm text-gray-500">
+          <a href="#" class="hover:text-gray-300 transition-colors">Política de Privacidad</a>
+          <a href="#" class="hover:text-gray-300 transition-colors">Términos de Uso</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de detalle de servicios -->
+  <div id="serviceModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeServiceModal()"></div>
+    <div class="relative glass-card rounded-2xl max-w-lg w-full p-8 border border-cyan-500/20 modal-animate">
+      <button onclick="closeServiceModal()" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="flex items-center gap-4 mb-6">
+        <div id="modalIcon" class="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"></div>
+        <h3 id="modalTitle" class="text-xl font-bold text-white font-tech"></h3>
+      </div>
+      <p id="modalDescription" class="text-gray-400 text-sm leading-relaxed mb-6"></p>
+      <ul id="modalFeatures" class="space-y-2 mb-8"></ul>
+      <a href="#contacto" onclick="closeServiceModal()" class="w-full block text-center py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold text-sm hover:shadow-lg hover:shadow-cyan-500/25 transition-all">
+        Consultar por este servicio
+      </a>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

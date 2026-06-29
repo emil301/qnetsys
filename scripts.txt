@@ -1,0 +1,471 @@
+/* ================================================================
+   scripts.js — QNetSys
+   1. Mobile menu
+   2. Scroll reveal
+   3. Counters animados
+   4. Navbar scroll
+   5. Smooth scroll
+   6. Modal de detalle de servicios
+   7. Formulario de contacto (Web3Forms)
+   8. Footer year
+   9. Simulador de cobertura
+================================================================ */
+
+/* ----------------------------------------------------------------
+   1. MOBILE MENU
+---------------------------------------------------------------- */
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  if (!menu) return;
+  menu.classList.toggle('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('#mobileMenu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobileMenu')?.classList.add('hidden');
+    });
+  });
+});
+
+/* ----------------------------------------------------------------
+   2. SCROLL REVEAL
+---------------------------------------------------------------- */
+function initScrollReveal() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+  );
+  document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+}
+
+/* ----------------------------------------------------------------
+   3. COUNTERS ANIMADOS
+---------------------------------------------------------------- */
+function animateCounter(el) {
+  const target   = parseInt(el.dataset.target, 10);
+  const suffix   = el.dataset.suffix || '';
+  const duration = 2000;
+  const stepTime = 20;
+  const steps    = duration / stepTime;
+  const increment = target / steps;
+  let current = 0;
+
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    el.textContent = Math.floor(current).toLocaleString('es-UY') + suffix;
+  }, stepTime);
+}
+
+function initCounters() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+  document.querySelectorAll('.counter-value[data-target]').forEach(el => observer.observe(el));
+}
+
+/* ----------------------------------------------------------------
+   4. NAVBAR SCROLL
+---------------------------------------------------------------- */
+function initNavbarScroll() {
+  const navbar = document.getElementById('navbar');
+  if (!navbar) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.style.background     = 'rgba(10, 14, 26, 0.98)';
+      navbar.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+      navbar.classList.add('shadow-lg', 'shadow-black/20');
+    } else {
+      navbar.style.background     = 'rgba(10, 14, 26, 0.85)';
+      navbar.style.borderBottomColor = 'rgba(255,255,255,0.05)';
+      navbar.classList.remove('shadow-lg', 'shadow-black/20');
+    }
+  });
+}
+
+/* ----------------------------------------------------------------
+   5. SMOOTH SCROLL
+---------------------------------------------------------------- */
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      const targetEl = document.querySelector(targetId);
+      if (!targetEl) return;
+      e.preventDefault();
+      const navbarHeight = document.getElementById('navbar')?.offsetHeight || 80;
+      const top = targetEl.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+}
+
+/* ----------------------------------------------------------------
+   6. MODAL DE DETALLE DE SERVICIOS
+---------------------------------------------------------------- */
+const SERVICES = {
+  cctv: {
+    title: 'CCTV & Video Vigilancia',
+    color: 'cyan',
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2
+        2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+    </svg>`,
+    description: 'Instalamos sistemas de videovigilancia IP de alta resolución con analítica de video embebida. Desde cámaras domo interiores hasta PTZ outdoor con visión nocturna extendida.',
+    features: [
+      'Cámaras 4K/8K con IA embebida (detección facial, conteo, intrusión)',
+      'Grabación continua 24/7 en NVR con redundancia RAID',
+      'Acceso remoto en tiempo real desde app móvil o web',
+      'Alertas automáticas por email, SMS o push',
+      'Retención de video configurable: 30 a 365 días',
+      'Integración con sistemas de control de acceso',
+    ],
+  },
+  access: {
+    title: 'Control de Acceso Biométrico',
+    color: 'indigo',
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002
+        2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+    </svg>`,
+    description: 'Controlá quién entra, cuándo y a qué zona. Sistemas de control de acceso con biometría multimodal, reportes de auditoría y gestión centralizada.',
+    features: [
+      'Reconocimiento facial, huella dactilar, vena de palma e iris',
+      'Tarjetas inteligentes MIFARE / DESFire',
+      'Lectores QR y PIN para visitantes',
+      'Software de gestión con reportes y auditoría completa',
+      'Integración con RRHH y Active Directory',
+      'Bloqueo / apertura remota de puertas',
+    ],
+  },
+  iot: {
+    title: 'Integración IoT',
+    color: 'emerald',
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0
+        002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+    </svg>`,
+    description: 'Conectamos tu edificio con sensores inteligentes y protocolos IoT industriales. Automatización de respuestas y gestión energética centralizada.',
+    features: [
+      'Sensores PIR, de gas, humo y temperatura',
+      'Protocolos MQTT, Zigbee, Z-Wave y LoRaWAN',
+      'Control de iluminación y climatización integrado',
+      'Monitoreo de consumo energético en tiempo real',
+      'Automatización de respuestas a incidentes',
+      'Dashboard unificado multi-dispositivo',
+    ],
+  },
+  cyber: {
+    title: 'Ciberseguridad',
+    color: 'purple',
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0
+        008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0
+        0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 8"/>
+    </svg>`,
+    description: 'Protección integral para infraestructura crítica. Firewalls de próxima generación, cifrado end-to-end y auditorías de penetración periódicas.',
+    features: [
+      'Firewalls de próxima generación (NGFW)',
+      'Detección y prevención de intrusiones (IDS/IPS)',
+      'Segmentación de redes VLAN',
+      'Cifrado AES-256 para transmisión de video',
+      'Auditorías de penetración periódicas',
+      'Cumplimiento con NIST Cybersecurity Framework',
+    ],
+  },
+  cloud: {
+    title: 'Plataforma Cloud QNetSys',
+    color: 'blue',
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78
+        2.096A4.001 4.001 0 003 15z"/>
+    </svg>`,
+    description: 'Dashboard unificado para gestión centralizada de todos tus sitios. Alertas push, reportes automáticos y app móvil iOS/Android incluida.',
+    features: [
+      'Vista multi-sitio en tiempo real',
+      'Alertas push, email y SMS',
+      'Reportes automáticos programados',
+      'App móvil iOS y Android',
+      'API REST para integraciones personalizadas',
+      'Infraestructura en AWS/Azure con redundancia multi-zona',
+    ],
+  },
+  support: {
+    title: 'Soporte & Mantenimiento 24/7',
+    color: 'orange',
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636
+        5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0
+        11-8 0 4 4 0 018 0z"/>
+    </svg>`,
+    description: 'Centro de monitoreo propio con operadores capacitados. Verificación de alarmas, coordinación con fuerzas de seguridad y planes de mantenimiento preventivo.',
+    features: [
+      'Operadores capacitados 24/7/365',
+      'Verificación de alarmas antes de despachar',
+      'Coordinación con policía y bomberos',
+      'Visita técnica programada (mensual, trimestral o semestral)',
+      'Actualización de firmware y software incluida',
+      'SLA garantizado por contrato',
+    ],
+  },
+};
+
+const COLOR_MAP = {
+  cyan:    { bg: 'bg-cyan-500/10',    text: 'text-cyan-400',    dot: 'bg-cyan-400' },
+  indigo:  { bg: 'bg-indigo-500/10',  text: 'text-indigo-400',  dot: 'bg-indigo-400' },
+  emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', dot: 'bg-emerald-400' },
+  purple:  { bg: 'bg-purple-500/10',  text: 'text-purple-400',  dot: 'bg-purple-400' },
+  blue:    { bg: 'bg-blue-500/10',    text: 'text-blue-400',    dot: 'bg-blue-400' },
+  orange:  { bg: 'bg-orange-500/10',  text: 'text-orange-400',  dot: 'bg-orange-400' },
+};
+
+function showServiceDetail(id) {
+  const service = SERVICES[id];
+  if (!service) return;
+
+  const c = COLOR_MAP[service.color] || COLOR_MAP.cyan;
+  const modal = document.getElementById('serviceModal');
+
+  // Icono
+  const iconEl = document.getElementById('modalIcon');
+  iconEl.className = `w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${c.bg} ${c.text}`;
+  iconEl.innerHTML = service.icon;
+
+  // Título y descripción
+  document.getElementById('modalTitle').textContent = service.title;
+  document.getElementById('modalDescription').textContent = service.description;
+
+  // Features
+  const featuresEl = document.getElementById('modalFeatures');
+  featuresEl.innerHTML = service.features.map(f => `
+    <li class="flex items-start gap-2 text-sm text-gray-300">
+      <span class="w-1.5 h-1.5 rounded-full ${c.dot} flex-shrink-0 mt-1.5"></span>
+      ${f}
+    </li>
+  `).join('');
+
+  modal.classList.remove('hidden');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeServiceModal() {
+  const modal = document.getElementById('serviceModal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeServiceModal();
+});
+
+/* ----------------------------------------------------------------
+   7. FORMULARIO DE CONTACTO — Web3Forms
+   document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const btn       = document.getElementById('submitBtn');
+    const btnText   = document.getElementById('submitBtnText');
+    const btnIcon   = document.getElementById('submitIcon');
+    const spinner   = document.getElementById('submitSpinner');
+    const successEl = document.getElementById('formSuccess');
+    const errorEl   = document.getElementById('formError');
+
+    // Reset mensajes
+    successEl?.classList.add('hidden');
+    errorEl?.classList.add('hidden');
+
+    // Validación campos requeridos
+    const requiredFields = ['contact_name', 'contact_email', 'contact_message'];
+    let valid = true;
+    requiredFields.forEach(name => {
+      const field = form.elements[name];
+      if (field && !field.value.trim()) {
+        field.classList.add('border-red-500/50', '!border-red-500');
+        field.addEventListener('input', () => {
+          field.classList.remove('border-red-500/50', '!border-red-500');
+        }, { once: true });
+        valid = false;
+      }
+    });
+    if (!valid) return;
+
+    // Estado de carga
+    btn.disabled    = true;
+    btnText.textContent = 'Enviando...';
+    btnIcon?.classList.add('hidden');
+    spinner?.classList.remove('hidden');
+
+    try {
+      const formData = new FormData(form);
+      // Aseguramos que el subject y from_name vengan del HTML
+      if (!formData.get('subject'))   formData.set('subject', 'Nueva consulta desde QNetSys');
+      if (!formData.get('from_name')) formData.set('from_name', 'QNetSys Web');
+
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+
+      const result = await res.json();
+
+      if (!res.ok || !result.success) {
+        throw new Error(result.message || 'Error en Web3Forms');
+      }
+
+      successEl?.classList.remove('hidden');
+      form.reset();
+
+    } catch (err) {
+      console.error('[QNetSys] Error al enviar formulario:', err);
+      errorEl?.classList.remove('hidden');
+    } finally {
+      btn.disabled    = false;
+      btnText.textContent = 'Enviar Consulta';
+      btnIcon?.classList.remove('hidden');
+      spinner?.classList.add('hidden');
+    }
+  });
+});
+   ➜ Reemplazá el value del campo access_key en el HTML con tu clave
+---------------------------------------------------------------- */
+
+
+/* ----------------------------------------------------------------
+   8. FOOTER YEAR
+---------------------------------------------------------------- */
+function initFooterYear() {
+  const el = document.getElementById('footer-year');
+  if (el) el.textContent = new Date().getFullYear();
+}
+
+/* ----------------------------------------------------------------
+   9. SIMULADOR DE COBERTURA
+---------------------------------------------------------------- */
+let currentSecurityLevel = 'advanced';
+
+function updateAreaValue() {
+  const val = document.getElementById('areaRange')?.value;
+  if (!val) return;
+  const display = document.getElementById('areaValue');
+  if (display) display.textContent = parseInt(val).toLocaleString('es-UY') + ' m²';
+}
+
+function setSecurityLevel(level) {
+  currentSecurityLevel = level;
+
+  // Reset todos los botones
+  ['basic', 'advanced', 'premium'].forEach(l => {
+    const btn = document.getElementById('btn' + l.charAt(0).toUpperCase() + l.slice(1));
+    if (!btn) return;
+    btn.classList.remove('border-cyan-500/30', 'bg-cyan-500/10', 'text-cyan-400');
+    btn.classList.add('border-white/10', 'text-gray-400');
+  });
+
+  // Activo
+  const activeBtn = document.getElementById('btn' + level.charAt(0).toUpperCase() + level.slice(1));
+  if (activeBtn) {
+    activeBtn.classList.remove('border-white/10', 'text-gray-400');
+    activeBtn.classList.add('border-cyan-500/30', 'bg-cyan-500/10', 'text-cyan-400');
+  }
+
+  calculateCoverage();
+}
+
+function calculateCoverage() {
+  const areaEl = document.getElementById('areaRange');
+  const typeEl = document.getElementById('installType');
+  if (!areaEl || !typeEl) return;
+
+  const area = parseInt(areaEl.value);
+  const type = typeEl.value;
+
+  const typeMultipliers = {
+    industrial:  1.3,
+    retail:      1.1,
+    critical:    1.5,
+    residential: 0.8,
+    office:      1.0,
+  };
+  const levelMultipliers = {
+    basic:    0.7,
+    advanced: 1.0,
+    premium:  1.4,
+  };
+
+  const m = (typeMultipliers[type] || 1) * (levelMultipliers[currentSecurityLevel] || 1);
+
+  const cameras      = Math.max(1, Math.ceil((area / 150) * m));
+  const accessPoints = Math.max(1, Math.ceil((area / 800) * m));
+  const sensors      = Math.max(1, Math.ceil((area / 200) * m));
+  const basePrice    = Math.ceil(area * 12.5 * m);
+
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  set('cameras',      cameras);
+  set('accessPoints', accessPoints);
+  set('sensors',      sensors);
+  set('investment',   '$' + basePrice.toLocaleString('es-UY'));
+}
+
+/* ----------------------------------------------------------------
+   INIT — ejecutado al cargar el DOM
+---------------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  initScrollReveal();
+  initCounters();
+  initNavbarScroll();
+  initSmoothScroll();
+  initFooterYear();
+  calculateCoverage(); // inicializa simulador con valores por defecto
+});
+
+
+   <script>
+    // Duplicar el track para crear loop infinito
+    const track = document.getElementById('track');
+    if (track) {
+      const clone = track.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.removeAttribute('id');
+      clone.removeAttribute('role');
+      track.parentNode.appendChild(clone);
+    }
+  </script>
